@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Walmart Driver Ambassador Log</title>
+    <style>
+        /* Custom Premium Stylesheet - No Internet Required */
+        :root {
+            --walmart-blue: #0071dc;
+            --walmart-yellow: #ffc220;
+            --walmart-dark: #041f41;
+            --bg-gray: #f3f4f6;
+            --border-color: #e5e7eb;
+            --text-primary: #1f2937;
+            --text-secondary: #4b5563;
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-gray);
+            color: var(--text-primary);
+            line-height: 1.5;
+            padding-bottom: 3rem;
+        }
+
+        /* Top Header Bar */
+        header {
+            background-color: var(--walmart-blue);
+            color: var(--white);
+            padding: 1rem 1.5rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .spark-logo {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .spark-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .header-text h1 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .header-text p {
+            font-size: 0.7rem;
+            color: var(--walmart-yellow);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            border-radius: 6px;
+            font-weight: 700;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .btn-export {
+            background-color: var(--walmart-yellow);
+            color: var(--walmart-dark);
+            padding: 0.6rem 1.2rem;
+            font-size: 0.85rem;
+        }
+
+        .btn-export:hover {
+            background-color: #e0aa1b;
+        }
+
+        .btn-clear {
+            background-color: #ef4444;
+            color: var(--white);
+            padding: 0.6rem 1.2rem;
+            font-size: 0.85rem;
+        }
+
+        .btn-clear:hover {
+            background-color: #dc2626;
+        }
+
+        /* Two Column Layout */
+        .app-container {
+            max-width: 1400px;
+            margin: 1.5rem auto;
+            padding: 0 1rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 1100px) {
+            .app-container {
+                grid-template-columns: 380px 1fr;
+            }
+        }
+
+        /* Form styling */
+        .card {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            padding: 1.5rem;
+            height: fit-content;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--walmart-dark);
+            margin-bottom: 1.25rem;
+            border-bottom: 2px solid var(--bg-gray);
+            padding-bottom: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 0.4rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .form-control:focus {
+            border-color: var(--walmart-blue);
+            box-shadow: 0 0 0 3px rgba(0, 113, 220, 0.15);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        @media (max-width: 480px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .char-counter-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.4rem;
+        }
+
+        .char-counter {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .char-counter.limit-reached {
+            color: #ef4444;
+            font-weight: 700;
+        }
+
+        .btn-submit {
+            background-color: var(--walmart-blue);
+            color: var(--white);
+            width: 100%;
+            padding: 1rem;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            margin-top: 0.5rem;
+        }
+
+        .btn-submit:hover {
+            background-color: #0056a6;
+        }
+
+        /* Interactive Table Section */
+        .sheet-card {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .sheet-header {
+            padding: 1.25rem 1.5rem;
+            background-color: #fafbfc;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .badge {
+            background-color: var(--walmart-blue);
+            color: var(--white);
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.3rem 0.8rem;
+            border-radius: 999px;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            width: 100%;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f8fafc;
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 0.85rem 1rem;
+            border-bottom: 1.5px solid var(--border-color);
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+
+        tr:hover {
+            background-color: #f8fafc;
+        }
+
+        .text-bold {
+            font-weight: 700;
+        }
+
+        .text-blue {
+            color: var(--walmart-blue);
+        }
+
+        /* Edit and Delete Buttons styling */
+        .action-cell {
+            display: flex;
+            gap: 0.4rem;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn-edit {
+            background-color: #e0f2fe;
+            color: #0369a1;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.75rem;
+            border-radius: 4px;
+        }
+
+        .btn-edit:hover {
+            background-color: #bae6fd;
+        }
+
+        .btn-delete {
+            background-color: #fee2e2;
+            color: #b91c1c;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.75rem;
+            border-radius: 4px;
+        }
+
+        .btn-delete:hover {
+            background-color: #fca5a5;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #9ca3af;
+            font-style: italic;
+            font-size: 0.95rem;
+        }
+
+        /* SMART MOBILE VIEW */
+        @media (max-width: 900px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+
+            thead {
+                display: none;
+            }
+
+            tr {
+                border-bottom: 8px solid var(--bg-gray);
+                padding: 1.25rem;
+            }
+
+            td {
+                border: none;
+                padding: 0.5rem 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                text-align: right;
+            }
+
+            td::before {
+                content: attr(data-label);
+                font-weight: 700;
+                color: var(--text-secondary);
+                font-size: 0.75rem;
+                text-transform: uppercase;
+                text-align: left;
+                width: 45%;
+            }
+
+            td[data-label="Comments"] {
+                flex-direction: column;
+                align-items: flex-start;
+                margin-top: 0.6rem;
+                border-top: 1px dashed var(--border-color);
+                padding-top: 0.6rem;
+                text-align: left;
+            }
+
+            td[data-label="Comments"]::before {
+                margin-bottom: 0.3rem;
+                width: 100%;
+            }
+
+            td[data-label="Action"] {
+                justify-content: flex-end;
+                margin-top: 0.5rem;
+            }
+
+            .action-cell {
+                width: 100%;
+                flex-direction: row;
+                gap: 0.5rem;
+            }
+
+            .btn-edit, .btn-delete {
+                flex: 1;
+                text-align: center;
+                padding: 0.6rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <div class="header-left">
+            <div class="spark-logo">
+                <img src="spark-yellow-on-blue.png" alt="Walmart Spark Logo" class="spark-image">
+            </div>
+            <div class="header-text">
+                <h1>Walmart</h1>
+                <p>Ambassador Fleet Portal</p>
+            </div>
+        </div>
+        <div class="header-buttons">
+            <button onclick="exportToCSV()" class="btn-export">📥 Export CSV</button>
+            <button onclick="clearAllLogs()" class="btn-clear">🗑️ Clear All</button>
+        </div>
+    </header>
+
+    <!-- Main Layout Container -->
+    <main class="app-container">
+        
+        <!-- Form Column -->
+        <div>
+            <!-- Left Side: Log Entry Card -->
+            <section class="card">
+                <h2 class="card-title">Log Ambassador Visit</h2>
+                <form id="logForm" onsubmit="handleFormSubmit(event)">
+                    
+                    <!-- Driver Info Grid -->
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="driverName">Driver Name</label>
+                            <input type="text" id="driverName" value="Robert J Cherney" required class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="truckTrailer">Truck / Trailer #</label>
+                            <input type="text" id="truckTrailer" placeholder="e.g. 12345 / 5321" required class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="date">Date</label>
+                        <input type="date" id="date" required class="form-control">
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="storeNum">Store Number</label>
+                            <input type="number" id="storeNum" placeholder="e.g. 100" required class="form-control">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="cityState">City & State</label>
+                            <input type="text" id="cityState" placeholder="e.g. Menomonie, WI" required class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="arrivalTime">Arrival Time</label>
+                            <input type="time" id="arrivalTime" required class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="departureTime">Departure Time</label>
+                            <input type="time" id="departureTime" required class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="poc">Point of Contact (POC)</label>
+                        <input type="text" id="poc" placeholder="e.g. Jane Doe (Receiving Mgr)" required class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <div class="char-counter-container">
+                            <label for="comments">Comments</label>
+                            <span id="charCounter" class="char-counter">144 remaining</span>
+                        </div>
+                        <textarea id="comments" maxlength="144" rows="3" placeholder="Enter visit details, safety wins, layout issues..." required oninput="updateCharCount()" class="form-control" style="resize: none;"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Add Log Entry</button>
+                </form>
+            </section>
+        </div>
+
+        <!-- Right Side: Log Table List Card -->
+        <section class="sheet-card">
+            <div class="sheet-header">
+                <h2 style="font-weight: 700; color: var(--walmart-dark); font-size: 1.15rem;">Ambassador Log Sheets</h2>
+                <span id="entryCount" class="badge">0 entries</span>
+            </div>
+            
+            <div class="table-responsive">
+                <table id="logTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Driver</th>
+                            <th>Truck/Trailer</th>
+                            <th>Store #</th>
+                            <th>City/State</th>
+                            <th>Arrival</th>
+                            <th>Departure</th>
+                            <th>POC</th>
+                            <th>Comments</th>
+                            <th style="text-align: center;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="logTableBody">
+                        <!-- Rows injected here -->
+                    </tbody>
+                </table>
+                <div id="noDataMessage" class="no-data">
+                    No visits logged yet. Use the form to start logging!
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- App System Scripts -->
+    <script>
+        // GLOBALS
+        let logs = [];
+
+        // SECURE ISOLATED STORAGE WRAPPER
+        const SafeStorage = {
+            checkSupport() {
+                try {
+                    if (typeof window !== 'undefined' && 'localStorage' in window && window.localStorage !== null) {
+                        window.localStorage.setItem('__test_active__', '1');
+                        window.localStorage.removeItem('__test_active__');
+                        return true;
+                    }
+                } catch (e) {
+                    // Safe catch
+                }
+                return false;
+            },
+            getItem(key, defaultValue) {
+                try {
+                    if (this.checkSupport()) {
+                        return window.localStorage.getItem(key) || defaultValue;
+                    }
+                } catch (e) {
+                    // Safe catch
+                }
+                return defaultValue;
+            },
+            setItem(key, value) {
+                try {
+                    if (this.checkSupport()) {
+                        window.localStorage.setItem(key, value);
+                        return true;
+                    }
+                } catch (e) {
+                    // Safe catch
+                }
+                return false;
+            }
+        };
+
+        // SAFE PAGE STARTUP
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                // Load existing logs safely
+                const savedData = SafeStorage.getItem('walmartLogs', '[]');
+                logs = JSON.parse(savedData) || [];
+
+                // Set default date safely
+                const dateInput = document.getElementById('date');
+                if (dateInput) {
+                    const today = new Date();
+                    const yyyy = today.getFullYear();
+                    const mm = String(today.getMonth() + 1).padStart(2, '0');
+                    const dd = String(today.getDate()).padStart(2, '0');
+                    dateInput.value = `${yyyy}-${mm}-${dd}`;
+                }
+
+                // Set default driver name safely
+                const nameInput = document.getElementById('driverName');
+                if (nameInput) {
+                    nameInput.value = SafeStorage.getItem('profileDriverName', 'Robert J Cherney');
+                }
+
+                // Initial UI drawing
+                renderTable();
+                updateCharCount();
+            } catch (e) {
+                console.error("Critical Setup Error: ", e);
+            }
+        });
+
+        // Character counter function
+        function updateCharCount() {
+            try {
+                const commentsInput = document.getElementById('comments');
+                const counter = document.getElementById('charCounter');
+                if (!commentsInput || !counter) return;
+
+                const remaining = 144 - commentsInput.value.length;
+                counter.textContent = `${remaining} remaining`;
+                
+                if (remaining <= 20) {
+                    counter.className = "char-counter limit-reached";
+                } else {
+                    counter.className = "char-counter";
+                }
+            } catch(e) {
+                console.error("Error updating character count: ", e);
+            }
+        }
+
+        function handleFormSubmit(event) {
+            try {
+                event.preventDefault();
+
+                const driverInput = document.getElementById('driverName');
+                const truckInput = document.getElementById('truckTrailer');
+                const dateInput = document.getElementById('date');
+                const storeInput = document.getElementById('storeNum');
+                const cityInput = document.getElementById('cityState');
+                const arrivalInput = document.getElementById('arrivalTime');
+                const departureInput = document.getElementById('departureTime');
+                const pocInput = document.getElementById('poc');
+                const commentsInput = document.getElementById('comments');
+
+                if (!driverInput || !truckInput || !dateInput || !storeInput || !cityInput || !arrivalInput || !departureInput || !pocInput || !commentsInput) {
+                    alert("Error: Some form elements are missing.");
+                    return;
+                }
+
+                const driverVal = driverInput.value;
+                const truckVal = truckInput.value;
+
+                // Save Driver Name to storage safely
+                SafeStorage.setItem('profileDriverName', driverVal);
+
+                const newLog = {
+                    id: Date.now(),
+                    driverName: driverVal,
+                    truckTrailer: truckVal,
+                    date: dateInput.value,
+                    storeNum: storeInput.value,
+                    cityState: cityInput.value,
+                    arrivalTime: arrivalInput.value,
+                    departureTime: departureInput.value,
+                    poc: pocInput.value,
+                    comments: commentsInput.value
+                };
+
+                logs.unshift(newLog);
+                saveAndRender();
+                
+                const savedDate = dateInput.value;
+                
+                document.getElementById('logForm').reset();
+                
+                // Re-populate ONLY the permanent driver profile name and current date
+                driverInput.value = driverVal;
+                dateInput.value = savedDate;
+                
+                updateCharCount();
+            } catch(e) {
+                console.error("Error submitting log form:", e);
+                alert("Unable to process log entry. Please try reloading the page.");
+            }
+        }
+
+        // EDIT FUNCTION: Loads item back into form and deletes old copy from list
+        function editLog(id) {
+            try {
+                const log = logs.find(l => l.id === id);
+                if (!log) return;
+
+                const driverInput = document.getElementById('driverName');
+                const truckInput = document.getElementById('truckTrailer');
+                const dateInput = document.getElementById('date');
+                const storeInput = document.getElementById('storeNum');
+                const cityInput = document.getElementById('cityState');
+                const arrivalInput = document.getElementById('arrivalTime');
+                const departureInput = document.getElementById('departureTime');
+                const pocInput = document.getElementById('poc');
+                const commentsInput = document.getElementById('comments');
+
+                if (driverInput) driverInput.value = log.driverName;
+                if (truckInput) truckInput.value = log.truckTrailer;
+                if (dateInput) dateInput.value = log.date;
+                if (storeInput) storeInput.value = log.storeNum;
+                if (cityInput) cityInput.value = log.cityState;
+                if (arrivalInput) arrivalInput.value = log.arrivalTime;
+                if (departureInput) departureInput.value = log.departureTime;
+                if (pocInput) pocInput.value = log.poc;
+                if (commentsInput) commentsInput.value = log.comments;
+
+                // Delete old record so submitting updates it
+                logs = logs.filter(l => l.id !== id);
+                saveAndRender();
+                
+                updateCharCount();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } catch(e) {
+                console.error("Error editing entry: ", e);
+            }
+        }
+
+        function deleteLog(id) {
+            try {
+                if (confirm("Delete this entry?")) {
+                    logs = logs.filter(log => log.id !== id);
+                    saveAndRender();
+                }
+            } catch(e) {
+                console.error("Error deleting entry: ", e);
+            }
+        }
+
+        function clearAllLogs() {
+            try {
+                if (confirm("⚠️ Clear ALL entries permanently? Your profile name will not be cleared.")) {
+                    logs = [];
+                    saveAndRender();
+                }
+            } catch(e) {
+                console.error("Error clearing logs: ", e);
+            }
+        }
+
+        function saveAndRender() {
+            try {
+                SafeStorage.setItem('walmartLogs', JSON.stringify(logs));
+            } catch(e) {
+                console.warn("Storage save failed. Running session-only.");
+            }
+            renderTable();
+        }
+
+        function renderTable() {
+            try {
+                const tbody = document.getElementById('logTableBody');
+                const noDataMsg = document.getElementById('noDataMessage');
+                const entryCount = document.getElementById('entryCount');
+                
+                if (!tbody) return;
+                
+                tbody.innerHTML = '';
+                
+                if (entryCount) {
+                    entryCount.textContent = `${logs.length} ${logs.length === 1 ? 'entry' : 'entries'}`;
+                }
+
+                if (logs.length === 0) {
+                    if (noDataMsg) noDataMsg.style.display = 'block';
+                    return;
+                } else {
+                    if (noDataMsg) noDataMsg.style.display = 'none';
+                }
+
+                logs.forEach(log => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td data-label="Date" class="text-bold">${formatDate(log.date)}</td>
+                        <td data-label="Driver">${log.driverName || 'N/A'}</td>
+                        <td data-label="Truck/Trailer">${log.truckTrailer || 'N/A'}</td>
+                        <td data-label="Store #" class="text-bold text-blue">#${log.storeNum}</td>
+                        <td data-label="City/State">${log.cityState}</td>
+                        <td data-label="Arrival">${formatTime(log.arrivalTime)}</td>
+                        <td data-label="Departure">${formatTime(log.departureTime)}</td>
+                        <td data-label="POC">${log.poc}</td>
+                        <td data-label="Comments" title="${log.comments}">${log.comments}</td>
+                        <td data-label="Action" style="text-align: center;">
+                            <div class="action-cell">
+                                <button onclick="editLog(${log.id})" class="btn-edit">✏️ Edit</button>
+                                <button onclick="deleteLog(${log.id})" class="btn-delete">✕ Delete</button>
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            } catch (e) {
+                console.error("Error rendering table list: ", e);
+            }
+        }
+
+        function formatDate(dateStr) {
+            if (!dateStr) return '';
+            const parts = dateStr.split('-');
+            if (parts.length !== 3) return dateStr;
+            const [year, month, day] = parts;
+            return `${month}/${day}/${year}`;
+        }
+
+        function formatTime(timeStr) {
+            if (!timeStr) return '';
+            const parts = timeStr.split(':');
+            if (parts.length < 2) return timeStr;
+            let [hours, minutes] = parts;
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12 || 12;
+            return `${hours}:${minutes} ${ampm}`;
+        }
+
+        function exportToCSV() {
+            try {
+                if (logs.length === 0) {
+                    alert("Nothing to export!");
+                    return;
+                }
+
+                const headers = ['Date', 'Driver Name', 'Truck/Trailer #', 'Store Number', 'City/State', 'Arrival Time', 'Departure Time', 'Point of Contact', 'Comments'];
+                const rows = logs.map(log => [
+                    formatDate(log.date),
+                    `"${(log.driverName || '').replace(/"/g, '""')}"`,
+                    `"${(log.truckTrailer || '').replace(/"/g, '""')}"`,
+                    log.storeNum,
+                    `"${log.cityState.replace(/"/g, '""')}"`,
+                    formatTime(log.arrivalTime),
+                    formatTime(log.departureTime),
+                    `"${log.poc.replace(/"/g, '""')}"`,
+                    `"${log.comments.replace(/"/g, '""')}"`
+                ]);
+
+                let csvContent = "data:text/csv;charset=utf-8," 
+                    + [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
+
+                const encodedUri = encodeURI(csvContent);
+                const link = document.createElement("a");
+                link.setAttribute("href", encodedUri);
+                link.setAttribute("download", `Walmart_Ambassador_Log_${new Date().toISOString().slice(0,10)}.csv`);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } catch(e) {
+                console.error("Error exporting data: ", e);
+                alert("Failed to export. Please try copying details manually.");
+            }
+        }
+    </script>
+</body>
+</html>
