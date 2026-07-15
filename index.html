@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Walmart Driver Ambassador Log</title>
+    <!-- LINK TO NATIVE SYSTEM APP MANIFEST -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0071dc">
+    
     <style>
         /* Custom Premium Stylesheet - No Internet Required */
         :root {
@@ -791,6 +795,14 @@
             } catch (e) {
                 console.error("Error rendering table list: ", e);
             }
+        }
+
+        // SERVICE WORKER REGISTRATION (Allows system app installer to detect and cache the offline icon)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('data:text/javascript;base64,c2VsZi5hZGRFdmVudExpc3RlbmVyKCdmZXRjaCcsIGV2ZW50ID0+IHsgZXZlbnQucmVzcG9uZFdpdGgoZmV0Y2goZXZlbnQucmVxdWVzdCkpOyB9KTs=')
+                .catch(err => console.log('ServiceWorker registration skipped (running local environment)'));
+            });
         }
 
         function formatDate(dateStr) {
